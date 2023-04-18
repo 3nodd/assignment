@@ -1,0 +1,173 @@
+class DentalService:
+    def __init__(self, service_name, cost):
+        self.service_name = service_name
+        self.cost = cost
+
+class Staff:
+    def __init__(self, role, name, id, phone_number):
+        self.role = role
+        self.name = name
+        self.id = id
+        self.phone_number = phone_number
+
+class Patient:
+    def __init__(self, name, id, phone_number):
+        self.name = name
+        self.id = id
+        self.phone_number = phone_number
+
+class Branch:
+    def __init__(self, address, phone_number, manager):
+        self.address = address
+        self.phone_number = phone_number
+        self.manager = manager
+        self.services = []
+        self.staff = []
+        self.patients = []
+        self.appointments = []
+
+    def add_service(self, service):
+        self.services.append(service)
+
+    def add_staff(self, staff):
+        self.staff.append(staff)
+
+    def add_patient(self, patient):
+        self.patients.append(patient)
+
+    def book_appointment(self, patient, service, staff):
+        appointment = Appointment(patient, service, staff)
+        self.appointments.append(appointment)
+        print("Appointment booked successfully!")
+
+    def checkout(self, appointment):
+        total_cost = 0
+        for service in appointment.service:
+            total_cost += service.cost
+        vat = 0.05 * total_cost
+        total_cost += vat
+        print("Patient: ", appointment.patient.name)
+        print("Service(s): ")
+        for service in appointment.service:
+            print("- ", service.service_name)
+        print("Cost: ", total_cost)
+        print("VAT: ", vat)
+        print("Total Cost: ", total_cost)
+
+class Branch:
+    def __init__(self, address, phone_number, manager):
+        self.address = address
+        self.phone_number = phone_number
+        self.manager = manager
+        self.services = []
+        self.staff = []
+        self.patients = []
+
+    def add_service(self, service):
+        self.services.append(service)
+
+    def add_staff(self, staff):
+        self.staff.append(staff)
+
+    def add_patient(self, patient):
+        self.patients.append(patient)
+
+    def display_services(self):
+        print("Services offered:")
+        for service in self.services:
+            print("- " + service.name + ": $" + str(service.cost))
+
+    def display_staff(self):
+        print("Staff members:")
+        for staff in self.staff:
+            print("- " + staff.name + " (" + staff.role + ")")
+
+    def display_patients(self):
+        print("Patients:")
+        for patient in self.patients:
+            print("- " + patient.name)
+
+    def book_appointment(self, patient, service):
+        appointment = Appointment(patient, service)
+        patient.add_appointment(appointment)
+        print("Appointment booked for " + patient.name + " with service: " + service.name)
+
+    def checkout(self, patient):
+        total_cost = 0
+        print("Payment Receipt for " + patient.name + ":")
+        for appointment in patient.appointments:
+            service = appointment.service
+            total_cost += service.cost
+            print("- " + service.name + ": $" + str(service.cost))
+        vat = total_cost * 0.05
+        total_cost += vat
+        print("VAT (5%): $" + str(vat))
+        print("Total: $" + str(total_cost))
+
+
+class Service:
+    def __init__(self, name, cost):
+        self.name = name
+        self.cost = cost
+
+
+class Staff:
+    def __init__(self, name, role):
+        self.name = name
+        self.role = role
+
+
+class Patient:
+    def __init__(self, name):
+        self.name = name
+        self.appointments = []
+
+    def add_appointment(self, appointment):
+        self.appointments.append(appointment)
+
+
+class Appointment:
+    def __init__(self, patient, service):
+        self.patient = patient
+        self.service = service
+
+
+# Example usage:
+
+# Create Branch
+branch1 = Branch("123 Main St", "1407-2004-1123", "anoud street")
+
+# Add Services
+service1 = Service("Cleaning", 50)
+service2 = Service("Implants", 500)
+service3 = Service("Crowns", 200)
+branch1.add_service(service1)
+branch1.add_service(service2)
+branch1.add_service(service3)
+
+# Add Staff
+staff1 = Staff("shaikha alhmadi", "Receptionist")
+staff2 = Staff("dhabia ", "Hygienist")
+staff3 = Staff("anoud", "Dentist")
+branch1.add_staff(staff1)
+branch1.add_staff(staff2)
+branch1.add_staff(staff3)
+
+# Add Patients
+patient1 = Patient("mathew meow")
+patient2 = Patient("alanoud meow")
+patient3 = Patient("cat meow")
+branch1.add_patient(patient1)
+branch1.add_patient(patient2)
+branch1.add_patient(patient3)
+
+# Display Services, Staff, and Patients
+branch1.display_services()
+branch1.display_staff()
+branch1.display_patients()
+
+# Book Appointment
+branch1.book_appointment(patient1, service1)
+
+# Checkout
+branch1.checkout(patient1)
