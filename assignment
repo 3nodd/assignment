@@ -1,0 +1,48 @@
+class DentalService:
+    def __init__(self, service_name, cost):
+        self.service_name = service_name
+        self.cost = cost
+
+class Staff:
+    def __init__(self, role, name, id, phone_number):
+        self.role = role
+        self.name = name
+        self.id = id
+        self.phone_number = phone_number
+
+class Patient:
+    def __init__(self, name, id, phone_number):
+        self.name = name
+        self.id = id
+        self.phone_number = phone_number
+
+class Branch:
+    def __init__(self, address, phone_number, manager):
+        self.address = address
+        self.phone_number = phone_number
+        self.manager = manager
+        self.services = []
+        self.patients = []
+
+class Appointment:
+    def __init__(self, patient, service, staff):
+        self.patient = patient
+        self.service = service
+        self.staff = staff
+
+    def checkout(self):
+        total_cost = self.service.cost
+        vat = 0.05 * total_cost
+        total_cost += vat
+        print("Patient: ", self.patient.name)
+        print("Service: ", self.service.service_name)
+        print("Cost: ", self.service.cost)
+        print("VAT: ", vat)
+        print("Total Cost: ", total_cost)
+
+# Creating instances of the classes
+cleaning = DentalService("Cleaning", 50.00)
+dentist1 = Staff("Mathew", "Meow", 101, "123-456-7890")
+patient1 = Patient("Alanoud", 1001, "987-654-3210")
+appointment1 = Appointment(patient1, cleaning, dentist1)
+appointment1.checkout()
